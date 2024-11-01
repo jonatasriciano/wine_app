@@ -1,0 +1,13 @@
+<!-- Path: /app/templates/account/signup.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Sign Up</h2>
+  <form method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+    {{ form|crispy }}  <!-- Se estiver usando Crispy Forms -->
+    <button type="submit">Sign Up</button>
+  </form>
+  <p>Already have an account? <a href="{% url 'account_login' %}">Login here</a>.</p>
+{% endblock %}

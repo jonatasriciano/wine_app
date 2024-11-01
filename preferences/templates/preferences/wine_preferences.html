@@ -1,0 +1,43 @@
+<!-- Path: /app/preferences/templates/preferences/wine_preferences.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wine Preferences</title>
+</head>
+<body>
+    <h1>Wine Preferences</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="wine_type">What type of wine are you looking for?</label><br>
+        <input type="radio" name="wine_type" value="Red"> Red<br>
+        <input type="radio" name="wine_type" value="White"> White<br>
+        <input type="radio" name="wine_type" value="Rose"> Rose<br><br>
+
+        <label for="budget">What's your budget for the bottle (in CAD)?</label><br>
+        <input type="number" name="budget" required><br><br>
+
+        <label for="grape_region">Grape variety or region, food pairing, and occasion:</label><br>
+        <textarea name="grape_region" rows="3" required></textarea><br><br>
+
+        <label for="sensory_perception">Wine Sensory Perception:</label><br>
+        <input type="checkbox" name="sensory_perception" value="Taste"> Taste<br>
+        <input type="checkbox" name="sensory_perception" value="Aroma"> Aroma<br>
+        <input type="checkbox" name="sensory_perception" value="Appearance"> Appearance<br>
+        <input type="checkbox" name="sensory_perception" value="Body"> Body<br><br>
+
+        <label for="social_psychological">Social and psychological factors:</label><br>
+        <textarea name="social_psychological" rows="3" required></textarea><br><br>
+
+        <label for="save_selection">Save this selection?</label><br>
+        <input type="radio" name="save_selection" value="yes"> Yes<br>
+        <input type="radio" name="save_selection" value="no"> No<br><br>
+
+        <label for="selection_name">Name for this selection (if yes):</label><br>
+        <input type="text" name="selection_name"><br><br>
+
+        <button type="submit">Submit Preferences</button>
+    </form>
+</body>
+</html>
