@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'preferences',
-    'django.contrib.sites',  # Ensure this is included
+    'django.contrib.sites', 
     'allauth',
     'allauth.account',
+    'debug_toolbar',  
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Add this line
+    'allauth.account.middleware.AccountMiddleware',  
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'wine_project.urls'
@@ -141,3 +143,9 @@ LOGIN_REDIRECT_URL = '/preferences/'  # Change this to your app's home page URL
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True  # Redirect to a URL after login
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
 ACCOUNT_SIGNUP_REDIRECT_URL = '/accounts/login/'  # Redirect after signup
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.db"

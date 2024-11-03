@@ -17,7 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 from .views import home  # Importando a nova view
+
 
 urlpatterns = [
     path('', home, name='home'),  # Adicionando a URL para a raiz
@@ -25,3 +27,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),  # Para autenticação
     path('preferences/', include('preferences.urls')),  # Para preferências de vinho
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns

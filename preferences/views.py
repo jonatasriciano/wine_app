@@ -11,16 +11,36 @@ def wine_preferences(request):
     """
     Collects user preferences, saves them, and calls an external API to get wine recommendations.
     """
+    # Initialize variables for both POST and GET requests
+    json_data = None  # To store JSON data sent to the API
+    api_response = None  # To store API response
+    api_url = None  # Define the API URL
+    headers = {}  # Define headers for API request
+    preference_data = None  # Placeholder for data sent to API
+
     if request.method == 'POST':
-        wine_type = request.POST.get('wine_type').lower()  # Assuming API expects lowercase values
-        budget = float(request.POST.get('budget'))
+        # Retrieve data from the form
+        wine_type = request.POST.get('wine_type').lower() if request.POST.get('wine_type') else None
+        budget = request.POST.get('budget')
         grape_region = request.POST.get('grape_region')
         sensory_perception = request.POST.getlist('sensory_perception')
         social_psychological = request.POST.get('social_psychological')
         save_selection = request.POST.get('save_selection')
         selection_name = request.POST.get('selection_name')
 
-        # Save preferences to the database
+        # Validate required fields
+        if not wine_type or not budget or not grape_region:
+            messages.error(request, "Please fill in all required fields.")
+            return render(request, 'preferences/wine_preferences.html')
+
+        # Convert budget to float and handle invalid entries
+        try:
+            budget = float(budget)
+        except ValueError:
+            messages.error(request, "Invalid budget value.")
+            return render(request, 'preferences/wine_preferences.html')
+
+        # Save the user's preferences to the database
         preference = WinePreference(
             user=request.user,
             wine_type=wine_type,
@@ -32,8 +52,9 @@ def wine_preferences(request):
         )
         preference.save()
 
-        # Prepare data to send to the external API in the required JSON format
+        # Prepare JSON data for the external API
         preference_data = {
+            "prompt": "Give me 3 wine recommendations based on my preferences",
             "preference": {
                 "type": wine_type,
                 "budget": budget,
@@ -45,24 +66,23 @@ def wine_preferences(request):
                 "user_id": str(request.user.id)
             }
         }
-
-        # Print the JSON data for debugging
-        print("Sending JSON data to API:", preference_data)
+        json_data = preference_data  # Store JSON data for display
 
         # Define the API URL and headers
-        api_url = "http://localhost:3000/api/prompt-gpt"  # Replace with your actual API endpoint
+        api_url = "http://ai-integration:3000/api/prompt-gpt"  # Ensure service name 'app' matches in Docker Compose
         headers = {
-            "x-api-key": "7bc70fdb-fa87-4fd1-8914-971f5b8742aa",  # Replace with your actual token
-            "Content-Type": "application/json"  # Define content type as JSON
+            "x-api-key": "7bc70fdb-fa87-4fd1-8914-971f5b8742aa",  # Replace with actual token
+            "Content-Type": "application/json"
         }
 
-        # Call the external API
+        # Make API request
         try:
             response = requests.post(api_url, json=preference_data, headers=headers)
-            response.raise_for_status()  # Check if the request was successful
-            recommendations = response.json().get('recommendations', [])  # Get the list of recommendations
+            response.raise_for_status()  # Trigger error for unsuccessful status codes
+            api_response = response.json()  # Parse JSON response
 
-            # Save each recommendation in the database
+            # Extract and save recommendations
+            recommendations = api_response.get('recommendations', [])
             for rec in recommendations:
                 WineRecommendation.objects.create(
                     preference=preference,
@@ -75,18 +95,24 @@ def wine_preferences(request):
 
             messages.success(request, 'Preferences saved and recommendations retrieved successfully.')
 
-        except requests.exceptions.RequestException as e:
+        except requests.RequestException as e:
             messages.error(request, f"Failed to get recommendations: {e}")
+            print("Error with Node.js API call:", e)  # Print error details for debugging
 
-        # Redirect to the saved preferences page
-        return redirect('view_preferences')  
-
-    return render(request, 'preferences/wine_preferences.html')
+    # Render the template with context data
+    return render(request, 'preferences/wine_preferences.html', {
+        'json_data': json_data,  # JSON data sent to the API
+        'api_response': api_response,  # Response received from the API
+        'api_url': api_url,  # API URL for display
+        'api_header': headers,  # API headers for display
+        'api_data': preference_data  # Data payload for display
+    })
 
 @login_required
 def view_preferences(request):
     """
     Displays the saved wine preferences and their corresponding recommendations for the logged-in user.
     """
-    preferences = WinePreference.objects.filter(user=request.user)  # Fetch preferences for the logged-in user
+    # Fetch all saved preferences and recommendations for the logged-in user
+    preferences = WinePreference.objects.filter(user=request.user)
     return render(request, 'preferences/view_preferences.html', {'preferences': preferences})
