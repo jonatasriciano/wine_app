@@ -1,54 +1,41 @@
-<!-- Path: /app/preferences/templates/preferences/view_preferences.html -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Your Wine Preferences</title>
-</head>
-<body>
-    <h1>Your Saved Wine Preferences and Recommendations</h1>
-    <table>
-        <tr>
-            <th>Wine Type</th>
-            <th>Budget (CAD)</th>
-            <th>Grape Region</th>
-            <th>Sensory Perception</th>
-            <th>Social/Psychological Factors</th>
-            <th>Selection Name</th>
-            <th>Created At</th>
-        </tr>
-        {% for preference in preferences %}
-        <tr>
-            <td>{{ preference.wine_type }}</td>
-            <td>{{ preference.budget }}</td>
-            <td>{{ preference.grape_region }}</td>
-            <td>{{ preference.sensory_perception|join:", " }}</td>
-            <td>{{ preference.social_psychological }}</td>
-            <td>{{ preference.selection_name }}</td>
-            <td>{{ preference.created_at }}</td>
-        </tr>
-        <tr>
-            <td colspan="7">
-                <h3>Recommendations</h3>
-                <ul>
-                    {% for rec in preference.recommendations.all %}
-                    <li>
-                        <strong>{{ rec.wine_name }}</strong> - {{ rec.region }} | {{ rec.grape_variety }} | ${{ rec.price }} <br>
-                        {{ rec.description }}
-                    </li>
-                    {% empty %}
-                    <li>No recommendations available.</li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="7">No preferences saved yet.</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="{% url 'wine_preferences' %}">Go back to preferences</a>
-</body>
-</html>
+<table>
+    <tr>
+        <th>Wine Type</th>
+        <th>Budget (CAD)</th>
+        <th>Grape Region</th>
+        <th>Sensory Perception</th>
+        <th>Social/Psychological Factors</th>
+        <th>Selection Name</th>
+        <th>Created At</th>
+    </tr>
+    {% for preference in preferences %}
+    <tr>
+        <td>{{ preference.wine_type }}</td>
+        <td>{{ preference.budget }}</td>
+        <td>{{ preference.grape_region }}</td>
+        <td>{{ preference.sensory_perception|join:", " }}</td>
+        <td>{{ preference.social_psychological }}</td>
+        <td>{{ preference.selection_name }}</td>
+        <td>{{ preference.created_at }}</td>
+    </tr>
+    <tr>
+        <td colspan="7">
+            <h3>Recommendations</h3>
+            <ul>
+                {% for rec in preference.recommendations.all %}
+                <li>
+                    <strong>{{ rec.wine_name }}</strong> - {{ rec.region }} | {{ rec.grape_variety }} | ${{ rec.price }} <br>
+                    {{ rec.description }}
+                </li>
+                {% empty %}
+                <li>No recommendations available.</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="7">No preferences saved yet.</td>
+    </tr>
+    {% endfor %}
+</table>

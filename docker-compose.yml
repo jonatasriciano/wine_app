@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - shared_network
+      - shared_network  # Connecting to the shared network for PostgreSQL
 
   web:
     build: .
@@ -22,8 +22,8 @@ services:
     depends_on:
       - db
     networks:
-      - shared_network
+      - shared_network  # Shared network for communication with Node
 
 networks:
   shared_network:
-    external: true  # This tells Docker to use an existing external network
+    external: true  # Using the same external shared network

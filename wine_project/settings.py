@@ -149,3 +149,7 @@ INTERNAL_IPS = [
 ]
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+API_URL = os.getenv('API_URL', 'http://ai-integration:3000/api/prompt-gpt')
+API_KEY = os.getenv('API_KEY', '7bc70fdb-fa87-4fd1-8914-971f5b8742aa')
+
