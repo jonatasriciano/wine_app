@@ -1,27 +1,42 @@
-<!-- Path: /app/preferences/templates/preferences/wine_preferences.html -->
+{% extends 'preferences/base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Wine Preferences</title>
-</head>
-<body>
-    <h1>Wine Preferences</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Renders the form fields -->
-        <button type="submit">Submit Preferences</button>
-    </form>
+{% block title %}Wine Preferences{% endblock %}
 
-    {% if json_data %}
-    <h2>JSON Data Sent:</h2>
-    <pre>{{ json_data }}</pre>
-    {% endif %}
-    
-    {% if api_response %}
-    <h2>API Response:</h2>
-    <pre>{{ api_response }}</pre>
-    {% endif %}
-</body>
-</html>
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="text-center mb-4 text-danger-emphasis">What's your wine for today?</h1>
+        
+        <!-- Formulário de Preferências de Vinho -->
+        <form method="POST" class="card p-4 mb-4 shadow-sm">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.wine_type|as_crispy_field }}
+                {{ form.budget|as_crispy_field }}   
+                {{ form.grape_region|as_crispy_field }}
+                {{ form.sensory_perception|as_crispy_field }}
+                {{ form.social_psychological|as_crispy_field }}
+                {{ form.save_selection|as_crispy_field }}
+
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit Preferences</button>
+        </form>
+
+        <!-- Exibição de JSON enviado, se presente -->
+        {% if json_data %}
+            <div class="card mb-4 p-4 shadow-sm">
+                <h2 class="h5 text-secondary">JSON Data Sent:</h2>
+                <pre class="bg-light p-3 rounded">{{ json_data }}</pre>
+            </div>
+        {% endif %}
+
+        <!-- Exibição de Resposta da API, se presente -->
+        {% if api_response %}
+            <div class="card mb-4 p-4 shadow-sm">
+                <h2 class="h5 text-secondary">API Response:</h2>
+                <pre class="bg-light p-3 rounded">{{ api_response }}</pre>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

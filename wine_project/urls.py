@@ -25,7 +25,7 @@ urlpatterns = [
     path('', home, name='home'),  # Adicionando a URL para a raiz
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),  # Para autenticação
-    path('preferences/', include('preferences.urls')),  # Para preferências de vinho
+    path('preferences/', include('preferences.urls', namespace='preferences')),  # Para preferências de vinho
 ]
 
 if settings.DEBUG:
