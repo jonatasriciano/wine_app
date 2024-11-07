@@ -1,42 +1,55 @@
+<!-- preferences.html -->
+
 {% extends 'preferences/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Wine Preferences{% endblock %}
-
-{% load crispy_forms_tags %}
 
 {% block content %}
     <div class="container">
         <h3 class="text-center mb-4 text-danger-emphasis">What's your wine for today?</h1>
         
-        <!-- Formulário de Preferências de Vinho -->
+        <!-- Wine Preferences Form -->
         <form method="POST" class="card p-4 mb-4 shadow-sm">
             {% csrf_token %}
             <div class="mb-3">
-                {{ form.wine_type|as_crispy_field }}
-                {{ form.budget|as_crispy_field }}   
+                <div class="wine-type-options">
+                    <label>Select Your Wine Type</label>
+                    <div class="fancy-radio-group">
+                        {% for choice in form.wine_type %}
+                            <label class="fancy-radio-option">
+                                {{ choice.tag }}
+                                <span class="fancy-radio-label">{{ choice.choice_label }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Display budget slider -->
+                <label for="id_budget">Budget (in CAD)</label>
+                {{ form.budget }}
+                <p id="budget_value" class="text-muted">Selected: $<span>{{ form.budget.value }}</span> CAD</p>
+                
                 {{ form.grape_region|as_crispy_field }}
                 {{ form.sensory_perception|as_crispy_field }}
                 {{ form.social_psychological|as_crispy_field }}
                 {{ form.save_selection|as_crispy_field }}
-
             </div>
             <button type="submit" class="btn btn-primary w-100">Submit Preferences</button>
         </form>
-
-        <!-- Exibição de JSON enviado, se presente -->
-        {% if json_data %}
-            <div class="card mb-4 p-4 shadow-sm">
-                <h2 class="h5 text-secondary">JSON Data Sent:</h2>
-                <pre class="bg-light p-3 rounded">{{ json_data }}</pre>
-            </div>
-        {% endif %}
-
-        <!-- Exibição de Resposta da API, se presente -->
-        {% if api_response %}
-            <div class="card mb-4 p-4 shadow-sm">
-                <h2 class="h5 text-secondary">API Response:</h2>
-                <pre class="bg-light p-3 rounded">{{ api_response }}</pre>
-            </div>
-        {% endif %}
     </div>
+
+    <script>
+        // JavaScript to update the displayed value as the slider is moved
+        const slider = document.getElementById("id_budget");
+        const output = document.getElementById("budget_value").getElementsByTagName("span")[0];
+
+        // Set initial slider display value
+        output.textContent = slider.value;
+
+        // Update display on input change
+        slider.oninput = function() {
+            output.textContent = this.value;
+        }
+    </script>
 {% endblock %}

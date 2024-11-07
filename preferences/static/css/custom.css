@@ -1,0 +1,93 @@
+.fancy-radio-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.fancy-radio-option {
+    position: relative;
+    cursor: pointer;
+    flex: 1 0 30%; /* Responsividade */
+    max-width: 150px;
+    margin: 5px;
+}
+
+.fancy-radio-option input[type="radio"] {
+    display: none;
+}
+
+.fancy-radio-option .fancy-radio-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 150px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease;
+    background-color: #f1f1f1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para cada tipo de vinho */
+.fancy-radio-option input[type="radio"]:checked + .fancy-radio-label {
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #fff; /* Cor do texto quando selecionado */
+}
+
+.fancy-radio-option input[type="radio"][value="Red"]:checked + .fancy-radio-label {
+    background-image: url("/static/images/red_wine.png");
+    background-color: rgba(139, 0, 0, 0.7);
+}
+
+.fancy-radio-option input[type="radio"][value="White"]:checked + .fancy-radio-label {
+    background-image: url("/static/images/white_wine.png");
+    background-color: rgba(245, 222, 179, 0.7);
+}
+
+.fancy-radio-option input[type="radio"][value="Rose"]:checked + .fancy-radio-label {
+    background-image: url("/static/images/rose_wine.png");
+    background-color: rgba(255, 192, 203, 0.7);
+    background-size: 145%;
+}
+
+/* Efeito de hover para destaque */
+.fancy-radio-option:hover .fancy-radio-label {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .fancy-radio-group {
+        gap: 10px;
+        justify-content: space-evenly;
+    }
+
+    .fancy-radio-option {
+        flex: 1 0 45%; /* Maior espaço disponível para as opções */
+        max-width: 120px;
+    }
+
+    .fancy-radio-option .fancy-radio-label {
+        height: 120px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .fancy-radio-option {
+        flex: 1 0 90%; /* As opções ocupam mais largura em telas muito pequenas */
+        max-width: 100%;
+    }
+
+    .fancy-radio-option .fancy-radio-label {
+        height: 100px;
+        font-size: 0.9em;
+    }
+}

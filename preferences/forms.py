@@ -1,16 +1,29 @@
 # preferences/forms.py
 
 from django import forms
+from django.forms.widgets import NumberInput
 
 class WinePreferenceForm(forms.Form):
     WINE_TYPE_CHOICES = [
         ('Red', 'Red'),
         ('White', 'White'),
-        ('Rose', 'Rose'),
+        ('Rose', 'Rosé'),
     ]
     
     wine_type = forms.ChoiceField(choices=WINE_TYPE_CHOICES, widget=forms.RadioSelect)
-    budget = forms.DecimalField(decimal_places=2, required=True)
+    
+    budget = forms.DecimalField(
+        decimal_places=2,
+        required=True,
+        widget=NumberInput(attrs={
+            'type': 'range',         # HTML range input
+            'min': '0',              # Minimum budget value
+            'max': '1000',            # Maximum budget value
+            'step': '1',             # Step increments
+            'class': 'form-range'    # Bootstrap class for styling sliders
+        })
+    )
+
     grape_region = forms.CharField(widget=forms.Textarea, required=True)
     sensory_perception = forms.MultipleChoiceField(
         choices=[
