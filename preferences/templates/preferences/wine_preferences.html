@@ -1,4 +1,4 @@
-<!-- preferences.html -->
+<!-- templates/preferences/wine_preferences.html -->
 
 {% extends 'preferences/base.html' %}
 {% load crispy_forms_tags %}
@@ -28,22 +28,24 @@
                 </div>
             </div>
             
+            <!-- Budget Selection -->
             <div class="mb-3">
                 <label for="id_budget">Budget (in CAD)</label>
                 {{ form.budget }}
                 <p id="budget_value" class="text-muted">Selected: $<span>{{ form.budget.value }}</span> CAD</p>
             </div>
 
+            <!-- Grape Region Selection -->
             <div class="mb-3">
                 <label>Select Grape Region</label>
                 <div class="row">
-                    {% for choice in form.grape_region %}
+                    {% for grape_region in grape_regions %}
                         <div class="col-6 col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="{{ choice.id_for_label }}" value="{{ choice.value.id }}">
-                                <label class="form-check-label" for="{{ choice.id_for_label }}">
-                                    <img src="{% static 'images/flags/'|add:choice.value.country_code|add:'.svg' %}" alt="{{ choice.value.name }} flag" class="flag-icon" style="width: 20px; height: 15px; margin-right: 5px;">
-                                    {{ choice.value.name }}
+                                <input type="checkbox" name="grape_region" value="{{ grape_region.id }}" class="form-check-input" id="id_grape_region_{{ grape_region.id }}">
+                                <label class="form-check-label" for="id_grape_region_{{ grape_region.id }}">
+                                    <img src="{% static 'images/flags/4x3/'|add:grape_region.country_code|add:'.svg' %}" alt="{{ grape_region.name }} flag" class="flag-icon" style="width: 20px; margin: 0px 5px;">
+                                    {{ grape_region.name }} - {{ grape_region.country }}
                                 </label>
                             </div>
                         </div>
@@ -51,11 +53,10 @@
                 </div>
             </div>
 
-            <!-- Sensory Perception, Social Psychological, Save Selection -->
             {{ form.sensory_perception|as_crispy_field }}
             {{ form.social_psychological|as_crispy_field }}
             {{ form.save_selection|as_crispy_field }}
-
+            
             <!-- Submit Button -->
             <button type="submit" class="btn btn-primary w-100">Submit Preferences</button>
         </form>
@@ -63,14 +64,9 @@
 
     <!-- JavaScript for Budget Slider -->
     <script>
-        // JavaScript to update the displayed value as the slider is moved
         const slider = document.getElementById("id_budget");
         const output = document.getElementById("budget_value").getElementsByTagName("span")[0];
-
-        // Set initial slider display value
         output.textContent = slider.value;
-
-        // Update display on input change
         slider.oninput = function() {
             output.textContent = this.value;
         }

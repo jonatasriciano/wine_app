@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'Collin Weather';
+    src: url('/static/fonts/CollinWeather.otf') format('opentype');
+}
+@font-face {
+    font-family: 'White Festive';
+    src: url('/static/fonts/WhiteFestive.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Valentine Rose';
+    src: url('/static/fonts/ValentineRose.ttf') format('opentype');
+}
+
 .fancy-radio-group {
     display: flex;
     gap: 15px;
@@ -9,7 +22,7 @@
 .fancy-radio-option {
     position: relative;
     cursor: pointer;
-    flex: 1 0 30%; /* Responsividade */
+    flex: 1 0 30%;
     max-width: 150px;
     margin: 5px;
 }
@@ -24,70 +37,105 @@
     justify-content: center;
     width: 100%;
     height: 150px;
-    font-size: 1.2em;
+    font-size: 50pt;
     font-weight: 600;
-    color: #333;
-    border-radius: 10px;
+    color: #ffffff;
+    border-radius: 12px;
+    background-color: transparent;
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease;
-    background-color: #f1f1f1;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15), 0 0 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
 }
 
-/* Estilos para cada tipo de vinho */
+.fancy-radio-option input[type="radio"][value="Red"] + .fancy-radio-label {
+    font-family: 'Collin Weather', sans-serif;
+    color: rgb(187, 39, 0);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgb(211, 47, 47);
+}
+
+.fancy-radio-option input[type="radio"][value="White"] + .fancy-radio-label {
+    font-family: 'White Festive', sans-serif;
+    color: rgb(241, 196, 15);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgb(241, 196, 15);
+}
+
+.fancy-radio-option input[type="radio"][value="Rose"] + .fancy-radio-label {
+    font-family: 'Valentine Rose', sans-serif;
+    color: rgb(240, 98, 146);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgb(240, 98, 146);
+}
+
 .fancy-radio-option input[type="radio"]:checked + .fancy-radio-label {
-    background-repeat: no-repeat;
     background-position: center;
-    color: #fff; /* Cor do texto quando selecionado */
+    background-size: 70%;
+    -webkit-filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, .3));
+    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, .3));
+    animation: slideBackground 0.5s ease forwards;
+}
+
+@keyframes slideBackground {
+    0% {
+        background-position: left;
+    }
+    100% {
+        background-position: center;
+    }
 }
 
 .fancy-radio-option input[type="radio"][value="Red"]:checked + .fancy-radio-label {
-    background-image: url("/static/images/red_wine.png");
-    background-color: rgba(139, 0, 0, 0.7);
+    background-image: url("/static/images/wine-red.svg");
+    background-color: rgba(211, 47, 47, 0.85);
+    background-repeat: no-repeat;
+    color: rgb(79, 79, 79);
+    text-shadow: 2px 2px 10px rgba(245, 230, 230, 0.2), 0 0 15px rgba(233, 224, 224, 0.15);
 }
 
 .fancy-radio-option input[type="radio"][value="White"]:checked + .fancy-radio-label {
-    background-image: url("/static/images/white_wine.png");
-    background-color: rgba(245, 222, 179, 0.7);
+    background-image: url("/static/images/wine-white.svg");
+    background-color: rgba(255, 230, 120, 0.85);
+    background-repeat: no-repeat;
+    color: rgb(79, 79, 79);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
 .fancy-radio-option input[type="radio"][value="Rose"]:checked + .fancy-radio-label {
-    background-image: url("/static/images/rose_wine.png");
-    background-color: rgba(255, 192, 203, 0.7);
-    background-size: 145%;
+    background-image: url("/static/images/wine-rose.svg");
+    background-color: rgba(249, 105, 140, 0.85);
+    background-repeat: no-repeat;
+    color: rgb(79, 79, 79);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Efeito de hover para destaque */
 .fancy-radio-option:hover .fancy-radio-label {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
     .fancy-radio-group {
         gap: 10px;
         justify-content: space-evenly;
     }
-
     .fancy-radio-option {
-        flex: 1 0 45%; /* Maior espaço disponível para as opções */
+        flex: 1 0 45%;
         max-width: 120px;
     }
-
     .fancy-radio-option .fancy-radio-label {
         height: 120px;
-        font-size: 1em;
+        font-size: 50pt;
     }
 }
 
 @media (max-width: 480px) {
     .fancy-radio-option {
-        flex: 1 0 90%; /* As opções ocupam mais largura em telas muito pequenas */
+        flex: 1 0 90%;
         max-width: 100%;
     }
-
     .fancy-radio-option .fancy-radio-label {
         height: 100px;
-        font-size: 0.9em;
+        font-size: 50pt;
     }
 }
