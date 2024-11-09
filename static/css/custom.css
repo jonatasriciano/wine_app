@@ -1,14 +1,21 @@
 @font-face {
     font-family: 'Collin Weather';
     src: url('/static/fonts/CollinWeather.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
 }
+
 @font-face {
-    font-family: 'White Festive';
-    src: url('/static/fonts/WhiteFestive.otf') format('opentype');
+    font-family: "Smoothing";
+    src: url('/static/fonts/Smoothing.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
 }
 @font-face {
     font-family: 'Valentine Rose';
     src: url('/static/fonts/ValentineRose.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
 }
 
 .fancy-radio-group {
@@ -55,7 +62,7 @@
 }
 
 .fancy-radio-option input[type="radio"][value="White"] + .fancy-radio-label {
-    font-family: 'White Festive', sans-serif;
+    font-family: 'Smoothing', sans-serif;
     color: rgb(241, 196, 15);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
     border: 2px solid rgb(241, 196, 15);
@@ -138,4 +145,10 @@
         height: 100px;
         font-size: 50pt;
     }
+}
+.form-select {
+    min-width: 200px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
 }
