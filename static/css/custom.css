@@ -162,3 +162,12 @@
 .logo {
     filter: brightness(0) invert(1);
 }
+
+.is-invalid {
+    border-color: #dc3545; /* Red border for invalid fields */
+}
+
+.error-msg {
+    color: #dc3545; /* Red text for error messages */
+    font-size: 0.875em;
+}

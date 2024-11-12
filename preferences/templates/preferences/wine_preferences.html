@@ -1,5 +1,4 @@
 <!-- templates/preferences/wine_preferences.html -->
-
 {% extends 'preferences/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -7,58 +6,64 @@
 {% block title %}Wine Preferences{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h3 class="text-center mb-4 text-danger-emphasis">What's your wine for today?</h3>
+<div class="container">
+    <h3 class="text-center mb-4 text-danger-emphasis">What's your wine for today?</h3>
+    
+    <form id="winePreferenceForm" method="POST" class="card p-4 mb-4 shadow-sm">
+        {% csrf_token %}
+
+        <!-- Step 1: Wine Type Selection -->
+        <div class="step" data-step="1">
+            <label>Select Your Wine Type</label>
+            <div class="fancy-radio-group">
+                {% for choice in form.wine_type %}
+                    <label class="fancy-radio-option">
+                        {{ choice.tag }}
+                        <span class="fancy-radio-label">{{ choice.choice_label }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+            <div class="error-msg text-danger"></div>
+        </div>
         
-        <form method="POST" class="card p-4 mb-4 shadow-sm">
-            {% csrf_token %}
+        <!-- Step 2: Budget Selection -->
+        <div class="step" data-step="2">
+            <label for="id_budget">Budget (in CAD)</label>
+            {{ form.budget }}
+            <p id="budget_value" class="text-muted">Selected: $<span>{{ form.budget.value }}</span> CAD</p>
+            <div class="error-msg text-danger"></div>
+        </div>
 
-            <div class="mb-3">
-                <div class="wine-type-options">
-                    <label>Select Your Wine Type</label>
-                    <div class="fancy-radio-group">
-                        {% for choice in form.wine_type %}
-                            <label class="fancy-radio-option">
-                                {{ choice.tag }}
-                                <span class="fancy-radio-label">{{ choice.choice_label }}</span>
-                            </label>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="id_budget">Budget (in CAD)</label>
-                {{ form.budget }}
-                <p id="budget_value" class="text-muted">Selected: $<span>{{ form.budget.value }}</span> CAD</p>
-            </div>
+        <!-- Step 3: Grape Region Selection -->
+        <div class="step" data-step="3">
+            <label for="id_grape_region">Select Grape Region</label>
+            {{ form.grape_region }}
+            <div class="error-msg text-danger"></div>
+        </div>
 
-            <div class="mb-3">
-                <label for="id_grape_region">Select Grape Region</label>
-                {{ form.grape_region }}
-            </div>
-
+        <!-- Step 4: Sensory Perception -->
+        <div class="step" data-step="4">
             {{ form.sensory_perception|as_crispy_field }}
+        </div>
+
+        <!-- Step 5: Social & Psychological -->
+        <div class="step" data-step="5">
             {{ form.social_psychological|as_crispy_field }}
+            <div class="error-msg text-danger"></div>
+        </div>
+
+        <!-- Step 6: Save Selection -->
+        <div class="step" data-step="6">
             {{ form.save_selection|as_crispy_field }}
-            
-            <button type="submit" class="btn btn-primary w-100">Submit Preferences</button>
-        </form>
-    </div>
-
-    <script>
-        const slider = document.getElementById("id_budget");
-        const output = document.getElementById("budget_value").getElementsByTagName("span")[0];
-        output.textContent = slider.value;
-        slider.oninput = function() {
-            output.textContent = this.value;
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            let grapeRegionSelect = document.getElementById("id_grape_region");
-            if (grapeRegionSelect) {
-                $(grapeRegionSelect).BsMultiSelect();
-            }
-        });
-    </script>
+            {{ form.selection_name|as_crispy_field }}
+        </div>
+        
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+            <button type="button" class="btn btn-secondary prev-button">Previous</button>
+            <button type="button" class="btn btn-primary next-button">Next</button>
+            <button type="submit" class="btn btn-success submit-button">Submit Preferences</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
