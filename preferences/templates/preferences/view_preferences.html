@@ -3,56 +3,60 @@
 {% block title %}Wine Preferences{% endblock %}
 
 {% block content %}
-    <!-- Tabela de Preferências de Vinho -->
-    <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">Wine Type</th>
-                <th scope="col">Budget (CAD)</th>
-                <th scope="col">Grape Region</th>
-                <th scope="col">Sensory Perception</th>
-                <th scope="col">Social/Psychological Factors</th>
-                <th scope="col">Selection Name</th>
-                <th scope="col">Created At</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for preference in preferences %}
-            <tr>
-                <td>{{ preference.wine_type }}</td>
-                <td>${{ preference.budget }}</td>
-                <td>{{ preference.grape_region }}</td>
-                <td>{{ preference.sensory_perception|join:", " }}</td>
-                <td>{{ preference.social_psychological }}</td>
-                <td>{{ preference.selection_name }}</td>
-                <td>{{ preference.created_at }}</td>
-            </tr>
-            <!-- Bloco de Recomendações -->
-            <tr>
-                <td colspan="7">
-                    <div class="mt-4">
-                        <h5 class="text-secondary">Recommendations</h5>
-                        <ul class="list-group">
-                            {% for rec in preference.recommendations.all %}
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold text-primary">{{ rec.wine_name }}</div>
-                                    {{ rec.region }} | {{ rec.grape_variety }} | ${{ rec.price }}<br>
-                                    <small>{{ rec.description }}</small>
-                                </div>
-                            </li>
-                            {% empty %}
-                            <li class="list-group-item">No recommendations available.</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7" class="text-center">No preferences saved yet.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container my-4">
+        <!-- Tabela de Preferências de Vinho -->
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Wine Type</th>
+                        <th scope="col">Budget (CAD)</th>
+                        <th scope="col">Grape Region</th>
+                        <th scope="col">Sensory Perception</th>
+                        <th scope="col">Social/Psychological Factors</th>
+                        <th scope="col">Selection Name</th>
+                        <th scope="col">Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for preference in preferences %}
+                    <tr>
+                        <td>{{ preference.wine_type }}</td>
+                        <td>${{ preference.budget }}</td>
+                        <td>{{ preference.grape_region }}</td>
+                        <td>{{ preference.sensory_perception|join:", " }}</td>
+                        <td>{{ preference.social_psychological }}</td>
+                        <td>{{ preference.selection_name }}</td>
+                        <td>{{ preference.created_at }}</td>
+                    </tr>
+                    <!-- Bloco de Recomendações -->
+                    <tr>
+                        <td colspan="7">
+                            <div class="mt-4">
+                                <h5 class="text-secondary">Recommendations</h5>
+                                <ul class="list-group">
+                                    {% for rec in preference.recommendations.all %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold text-primary">{{ rec.wine_name }}</div>
+                                            {{ rec.region }} | {{ rec.grape_variety }} | ${{ rec.price }}<br>
+                                            <small>{{ rec.description }}</small>
+                                        </div>
+                                    </li>
+                                    {% empty %}
+                                    <li class="list-group-item">No recommendations available.</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No preferences saved yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

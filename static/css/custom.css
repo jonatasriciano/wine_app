@@ -11,6 +11,7 @@
     font-weight: 400;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'Valentine Rose';
     src: url('/static/fonts/ValentineRose.ttf') format('opentype');
@@ -54,28 +55,28 @@
     border: 2px solid transparent;
 }
 
-.fancy-radio-option input[type="radio"][value="Red"] + .fancy-radio-label {
+.fancy-radio-option input[type="radio"][value="Red"]+.fancy-radio-label {
     font-family: 'Collin Weather', sans-serif;
     color: rgb(187, 39, 0);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
     border: 2px solid rgb(211, 47, 47);
 }
 
-.fancy-radio-option input[type="radio"][value="White"] + .fancy-radio-label {
+.fancy-radio-option input[type="radio"][value="White"]+.fancy-radio-label {
     font-family: 'Smoothing', sans-serif;
     color: rgb(241, 196, 15);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
     border: 2px solid rgb(241, 196, 15);
 }
 
-.fancy-radio-option input[type="radio"][value="Rose"] + .fancy-radio-label {
+.fancy-radio-option input[type="radio"][value="Rose"]+.fancy-radio-label {
     font-family: 'Valentine Rose', sans-serif;
     color: rgb(240, 98, 146);
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.15);
     border: 2px solid rgb(240, 98, 146);
 }
 
-.fancy-radio-option input[type="radio"]:checked + .fancy-radio-label {
+.fancy-radio-option input[type="radio"]:checked+.fancy-radio-label {
     background-position: center;
     background-size: 70%;
     -webkit-filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, .3));
@@ -87,12 +88,13 @@
     0% {
         background-position: left;
     }
+
     100% {
         background-position: center;
     }
 }
 
-.fancy-radio-option input[type="radio"][value="Red"]:checked + .fancy-radio-label {
+.fancy-radio-option input[type="radio"][value="Red"]:checked+.fancy-radio-label {
     background-image: url("/static/images/wine-red.svg");
     background-color: rgba(211, 47, 47, 0.85);
     background-repeat: no-repeat;
@@ -100,7 +102,7 @@
     text-shadow: 2px 2px 10px rgba(245, 230, 230, 0.2), 0 0 15px rgba(233, 224, 224, 0.15);
 }
 
-.fancy-radio-option input[type="radio"][value="White"]:checked + .fancy-radio-label {
+.fancy-radio-option input[type="radio"][value="White"]:checked+.fancy-radio-label {
     background-image: url("/static/images/wine-white.svg");
     background-color: rgba(255, 230, 120, 0.85);
     background-repeat: no-repeat;
@@ -108,7 +110,7 @@
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
-.fancy-radio-option input[type="radio"][value="Rose"]:checked + .fancy-radio-label {
+.fancy-radio-option input[type="radio"][value="Rose"]:checked+.fancy-radio-label {
     background-image: url("/static/images/wine-rose.svg");
     background-color: rgba(249, 105, 140, 0.85);
     background-repeat: no-repeat;
@@ -126,10 +128,12 @@
         gap: 10px;
         justify-content: space-evenly;
     }
+
     .fancy-radio-option {
         flex: 1 0 45%;
         max-width: 120px;
     }
+
     .fancy-radio-option .fancy-radio-label {
         height: 120px;
         font-size: 50pt;
@@ -141,14 +145,20 @@
         flex: 1 0 90%;
         max-width: 100%;
     }
+
     .fancy-radio-option .fancy-radio-label {
         height: 100px;
         font-size: 50pt;
     }
 }
+
 .form-select {
     min-width: 200px;
     border-radius: 8px;
     border: 1px solid #ccc;
     padding: 10px;
+}
+
+.logo {
+    filter: brightness(0) invert(1);
 }
