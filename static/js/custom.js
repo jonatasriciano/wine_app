@@ -62,12 +62,21 @@ $(document).ready(function () {
     const $output = $("#budget_value span");
     $output.text($slider.val());
 
-    $slider.on("input", function() {
+    $slider.on("input", function () {
         $output.text($(this).val());
     });
 
     const $grapeRegionSelect = $("#id_grape_region");
     if ($grapeRegionSelect.length) {
-        $grapeRegionSelect.BsMultiSelect();
+        $grapeRegionSelect.BsMultiSelect({
+            includeSelectAllOption: true,  // Adiciona a opção "Select All"
+            enableFiltering: true,         // Habilita filtro de pesquisa
+            maxHeight: 200,               // Define a altura máxima
+            nonSelectedText: 'Select regions',
+            nSelectedText: '# selected',
+            allSelectedText: 'All selected'
+        });
     }
+
+
 });
