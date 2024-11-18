@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class WinePreference(models.Model):
+    """
+    Model to store user wine preferences.
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     wine_type = models.CharField(max_length=20)
     budget = models.DecimalField(max_digits=10, decimal_places=2)
@@ -14,7 +17,11 @@ class WinePreference(models.Model):
     def __str__(self):
         return f"{self.user.username}'s preference for {self.wine_type}"
 
+
 class WineRecommendation(models.Model):
+    """
+    Model to store wine recommendations for each wine preference.
+    """
     preference = models.ForeignKey(WinePreference, on_delete=models.CASCADE, related_name="recommendations")
     wine_name = models.CharField(max_length=255)
     region = models.CharField(max_length=255)
@@ -27,7 +34,11 @@ class WineRecommendation(models.Model):
     def __str__(self):
         return f"Recommendation: {self.wine_name} for {self.preference.selection_name}"
 
+
 class GrapeRegion(models.Model):
+    """
+    Model to store grape regions with specific details.
+    """
     name = models.CharField(max_length=255, unique=True)
     country = models.CharField(max_length=255)
     famous_for = models.CharField(max_length=255)

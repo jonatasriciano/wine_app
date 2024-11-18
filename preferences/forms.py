@@ -1,20 +1,21 @@
 from django import forms
-from preferences.models import GrapeRegion
 from django.forms.widgets import SelectMultiple
+from preferences.models import GrapeRegion
 
-# Custom Widget for BsMultiSelect with flags
-class FlagBsMultiSelectWidget(forms.SelectMultiple):
+# Custom Widget for GrapeRegion to include flag SVGs and the data-mdb-icon attribute
+class FlagSelectWidget(SelectMultiple):
     def render_option(self, selected_choices, option_value, option_label):
-        try:
-            region = GrapeRegion.objects.get(id=option_value)
-            flag_svg_path = f"/static/images/flags/4x3/{region.country_code}.svg" if region.country_code else "/static/images/flags/default.svg"
-        except GrapeRegion.DoesNotExist:
-            flag_svg_path = "/static/images/flags/default.svg"
-
-        # Render HTML for BsMultiSelect options
+        # Get the region object based on the option_value
+        region = GrapeRegion.objects.get(id=option_value)
+        
+        # Path to the flag SVG based on the country code
+        flag_svg_path = f"/static/images/flags/4x3/{region.country_code}.svg"
+        
+        # Add data-mdb-icon with the flag URL and the region name
         return f'''
-            <option value="{option_value}" {"selected" if option_value in selected_choices else ""}>
-                <img src="{flag_svg_path}" alt="{region.name}" style="width: 20px; height: 15px; margin-right: 10px;">
+            <option oi value="{option_value}" 
+                    {"selected" if option_value in selected_choices else ""} 
+                    data-mdb-icon="{flag_svg_path}">
                 {option_label}
             </option>
         '''
@@ -48,7 +49,7 @@ class WinePreferenceForm(forms.Form):
 
     grape_region = forms.ModelMultipleChoiceField(
         queryset=GrapeRegion.objects.all(),
-        widget=FlagBsMultiSelectWidget(attrs={'class': 'form-select', 'id': 'id_grape_region'}),
+        widget=FlagSelectWidget(attrs={'class': 'form-select', 'id': 'id_grape_region'}),
         error_messages={'required': 'Please select at least one grape region.'}
     )
 
