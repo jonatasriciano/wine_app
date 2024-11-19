@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 class WinePreference(models.Model):
     """
@@ -28,9 +29,9 @@ class WineRecommendation(models.Model):
     grape_variety = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    link = models.URLField(max_length=500, blank=True)
-
+    # Step 1: `created_at` with null=True for existing data compatibility
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    link = models.URLField(max_length=255, blank=True)
     def __str__(self):
         return f"Recommendation: {self.wine_name} for {self.preference.selection_name}"
 
@@ -43,7 +44,7 @@ class GrapeRegion(models.Model):
     country = models.CharField(max_length=255)
     famous_for = models.CharField(max_length=255)
     availability = models.CharField(max_length=50)
-    country_code = models.CharField(max_length=5, blank=True, help_text="Country code")
+    country_code = models.CharField(max_length=5, blank=True, help_text="ISO 3166-1 alpha-2 country code")
 
     class Meta:
         ordering = ['name']  # Sort regions alphabetically by name
