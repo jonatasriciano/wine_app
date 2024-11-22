@@ -29,5 +29,5 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Command to run the Django application, waiting for the database to be ready
-CMD ["wait-for-it", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Command to run the Django application, waiting for the database to be ready, then run migrations and start server
+CMD ["wait-for-it", "db:5432", "--", "sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]

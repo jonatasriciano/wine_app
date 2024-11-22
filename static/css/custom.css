@@ -159,9 +159,6 @@
     padding: 10px;
 }
 
-.logo {
-    filter: brightness(0) invert(1);
-}
 
 .is-invalid {
     border-color: #dc3545; /* Red border for invalid fields */

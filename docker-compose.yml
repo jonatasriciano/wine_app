@@ -8,7 +8,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - shared_network  # Connecting to the shared network for PostgreSQL
+      - shared_network
 
   web:
     build: .
@@ -20,8 +20,8 @@ services:
     depends_on:
       - db
     networks:
-      - shared_network  # Shared network for communication with Node
+      - shared_network
 
 networks:
   shared_network:
-    driver: bridge  # Let Docker Compose manage the network
+    driver: bridge
