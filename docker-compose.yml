@@ -24,4 +24,4 @@ services:
 
 networks:
   shared_network:
-    external: true  # Using the same external shared network
+    driver: bridge  # Let Docker Compose manage the network
